@@ -6,11 +6,11 @@ import 'package:random_quotes_app/ui/services/api_service.dart';
 import '../services/dataState.dart';
 import '../services/statenotifier.dart';
 
-final randomFutureProvider =
-    FutureProvider.autoDispose<RandomData>((ref) async {
-  final apiService = ref.watch(apiServiceProvider);
-  return apiService.getRandomQuotes();
-});
+// final randomFutureProvider =
+//     FutureProvider<RandomData>((ref) async {
+//   final apiService = ref.watch(apiServiceProvider);
+//   return apiService.getRandomQuotes();
+// });
 
 class FutureProviderPage extends ConsumerWidget {
   const FutureProviderPage({super.key, required this.color});
@@ -36,19 +36,19 @@ class FutureProviderPage extends ConsumerWidget {
                   ? Column(
                       children: [
                         Text(state.data.content),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Text(state.data.author),
                       ],
                     )
                   : state is DataErrorState
                       ? Text(state.message.toString())
-                      : CircularProgressIndicator(),
-              SizedBox(height: 30),
+                      : const CircularProgressIndicator(),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   ref.read(dataNotifierProvider.notifier).getJoke();
                 },
-                child: Text('Get Random Quote'),
+                child: const Text('Get Random Quote'),
               ),
             ],
           ),

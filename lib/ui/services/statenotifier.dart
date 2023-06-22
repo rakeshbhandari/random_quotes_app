@@ -21,5 +21,4 @@ class DataNotifier extends StateNotifier<DataState> {
 
 // make provider for datanotifier
 final dataNotifierProvider =
-    StateNotifierProvider.autoDispose<DataNotifier, DataState>(
-        (ref) => DataNotifier());
+    StateNotifierProvider<DataNotifier, DataState>((ref) => DataNotifier());
