@@ -7,10 +7,11 @@ import '../models/random.dart';
 final apiServiceProvider = Provider<ApiService>((ref) => ApiService());
 
 class ApiService {
-  Future<Random> getRandomQuotes() async {
+  Future<RandomData> getRandomQuotes() async {
     try {
       final res = await Dio().get('https://api.quotable.io/random');
-      return Random.fromJson(res.data);
+      print(res.statusCode);
+      return RandomData.fromJson(res.data);
     } catch (e) {
       throw Exception('Error getting quotes');
     }

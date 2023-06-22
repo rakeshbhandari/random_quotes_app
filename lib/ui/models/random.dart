@@ -1,11 +1,11 @@
-class Random {
-  Random({
+class RandomData {
+  RandomData({
     required this.content,
     required this.author,
   });
 
-  factory Random.fromJson(Map<String, dynamic> json) =>
-      Random(content: json['content'], author: json['author']);
+  factory RandomData.fromJson(Map<String, dynamic> json) =>
+      RandomData(content: json['content'], author: json['author']);
 
   final String content;
   final String author;
