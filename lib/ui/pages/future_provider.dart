@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_quotes_app/ui/models/random.dart';
 import 'package:random_quotes_app/ui/services/api_service.dart';
 
-final randomFutureProvider = FutureProvider.autoDispose<Random>((ref) async {
+import '../services/dataState.dart';
+import '../services/statenotifier.dart';
+
+final randomFutureProvider =
+    FutureProvider.autoDispose<RandomData>((ref) async {
   final apiService = ref.watch(apiServiceProvider);
   return apiService.getRandomQuotes();
 });
-
 
 class FutureProviderPage extends ConsumerWidget {
   const FutureProviderPage({super.key, required this.color});
@@ -16,35 +19,39 @@ class FutureProviderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final randomRef = ref.watch(randomFutureProvider);
+    // final state = ref.watch(dataNotifierProvider.notifier);
+    final state = ref.watch(dataNotifierProvider);
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: color,
           title: const Text('Future Provider'),
         ),
         body: Center(
-          child: randomRef.when(data: (data) {
-            return Column(
-              children: [
-                Text(data.content,
-                    style: Theme.of(context).textTheme.headlineMedium),
-                Text(data.author,
-                    style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: 100),
-                ElevatedButton(
-                  onPressed: () {
-                    // ref.refresh(randomFutureProvider);
-                    ref.read(apiServiceProvider).getRandomQuotes();
-                  },
-                  child: const Text('Next'),
-                )
-              ],
-            );
-          }, error: (error, _) {
-            return Text(error.toString());
-          }, loading: () {
-            return const CircularProgressIndicator();
-          }),
-        ));
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              state is DataLoadedState
+                  ? Column(
+                      children: [
+                        Text(state.data.content),
+                        SizedBox(height: 30),
+                        Text(state.data.author),
+                      ],
+                    )
+                  : state is DataErrorState
+                      ? Text(state.message.toString())
+                      : CircularProgressIndicator(),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  ref.read(dataNotifierProvider.notifier).getJoke();
+                },
+                child: Text('Get Random Quote'),
+              ),
+            ],
+          ),
+        )));
   }
 }
