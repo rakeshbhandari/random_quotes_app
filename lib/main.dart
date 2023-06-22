@@ -18,9 +18,7 @@ class Main extends StatelessWidget {
       theme: FlexThemeData.light(scheme: FlexScheme.bigStone),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.bigStone),
       themeMode: ThemeMode.dark,
-      home: const FutureProviderPage(
-        color: Colors.black,
-      ),
+      home: const HomePage(),
     );
   }
 }

@@ -10,18 +10,22 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: ElevatedButton( child:const Text ('Get quotes'),
-        onPressed: () {
-         Navigator.push(
-          context,
-            MaterialPageRoute(
-              builder: (context)=> FutureProviderPage(
-                color: Theme.of(context).colorScheme.primary)),
-              );
-      
-        },
-      
+      body: Row(
+        children: [
+          ElevatedButton( child:const Text ('Get quotes'),
+            onPressed: () {
+             Navigator.push(
+              context,
+                MaterialPageRoute(
+                  builder: (context)=> FutureProviderPage(
+                    color: Theme.of(context).colorScheme.primary)),
+                  );
+            },
+          ),
+          
+        ],
       ),
+      
 
 
 
