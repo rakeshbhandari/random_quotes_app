@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:random_quotes_app/ui/pages/future_provider.dart';
-import 'package:random_quotes_app/ui/services/statenotifier.dart';
+import 'package:random_quotes_app/presentation/jokepage.dart';
+import 'package:random_quotes_app/data/notifier/statenotifier.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -20,7 +20,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: ElevatedButton(
         child: const Text('Get quotes'),
         onPressed: () {
-          ref.read(dataNotifierProvider.notifier).getJoke();
           Navigator.push(
             context,
             MaterialPageRoute(

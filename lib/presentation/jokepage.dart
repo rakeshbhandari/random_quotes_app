@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:random_quotes_app/ui/models/random.dart';
-import 'package:random_quotes_app/ui/services/api_service.dart';
-
-import '../services/dataState.dart';
-import '../services/statenotifier.dart';
-
-// final randomFutureProvider =
-//     FutureProvider<RandomData>((ref) async {
-//   final apiService = ref.watch(apiServiceProvider);
-//   return apiService.getRandomQuotes();
-// });
+import '../domain/state/jokeState.dart';
+import '../data/notifier/statenotifier.dart';
 
 class FutureProviderPage extends ConsumerWidget {
   const FutureProviderPage({super.key, required this.color});
@@ -19,8 +10,7 @@ class FutureProviderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final state = ref.watch(dataNotifierProvider.notifier);
-    final state = ref.watch(dataNotifierProvider);
+    final state = ref.watch(jokeNotifierProvider);
 
     return Scaffold(
         appBar: AppBar(
@@ -32,21 +22,21 @@ class FutureProviderPage extends ConsumerWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              state is DataLoadedState
+              state is JokeLoadedState
                   ? Column(
                       children: [
-                        Text(state.data.content),
+                        Text(state.joke.content),
                         const SizedBox(height: 30),
-                        Text(state.data.author),
+                        Text(state.joke.author),
                       ],
                     )
-                  : state is DataErrorState
+                  : state is JokeErrorState
                       ? Text(state.message.toString())
                       : const CircularProgressIndicator(),
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  ref.read(dataNotifierProvider.notifier).getJoke();
+                  ref.read(jokeNotifierProvider.notifier).getJoke();
                 },
                 child: const Text('Get Random Quote'),
               ),
